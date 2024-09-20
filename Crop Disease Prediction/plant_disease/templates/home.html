@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Crop Disease Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e8f5e9;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'images/green.png' %}");
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .container {
+            margin-top: 25px;
+            max-width: 960px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* animation: fadeIn 1.5s ease-in-out; */
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            /* animation: fadeIn 1s ease-in-out; */
+        }
+        p {
+            color: black;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        aside {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h2 {
+            color: black;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Plant Predict</a>
+        <div class="collapse navbar-collapse" style="margin-left: 30vh;">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload_image' %}">Predict</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}?next={% url 'login' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Crop Disease Prediction</h1>
+        <p>The Plant Disease Detection and Classification project aims to develop a system capable of identifying diseases
+        in plants through image analysis. With the increasing demand for efficient agricultural practices and the challenges 
+        posed by plant diseases, automated systems for disease detection offer a promising solution to farmers and agronomists.
+        This project leverages deep learning techniques to analyze images of plant leaves and accurately classify them into healthy 
+        or diseased categories. By providing farmers with timely and accurate information about the health status of their crops, the 
+        system aims to facilitate early disease detection, prompt treatment, and ultimately improve crop yield and reduce economic
+        losses.</p>
+
+        <aside>
+            <h2>Project Developer</h2>
+            <p>Arya</p>
+        </aside>
+    </div>
+
+    <footer>
+        &copy; 2024 Plant Predict. All rights reserved.
+    </footer>
+</body>
+</html>

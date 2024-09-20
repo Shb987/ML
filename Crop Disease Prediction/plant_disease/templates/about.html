@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Plant Disease Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e8f5e9;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'images/green.png' %}");
+            background-size: cover;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .container {
+            margin-top: 13px;
+            max-width: 960px;
+            padding: 0 15px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: black; 
+        }
+        p {
+            color: black; /* Brighter text color */
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        ul {
+            color: black; /* Brighter text color */
+            margin-bottom: 20px;
+        }
+        .table-container {
+            margin-top: 10px;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Plant Predict</a>
+        <div class="collapse navbar-collapse" style="margin-left: 30vh;">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload_image' %}">Predict</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}?next={% url 'login' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-box">
+            <h1>About This Application</h1>
+            <p>This application detects diseases in three types of plants:</p>
+            <ul>
+                <li>Potato</li>
+                <li>Tomato</li>
+                <li>Pepper</li>
+            </ul>
+
+            <h2>Classes</h2>
+            <div class="row">
+                <div class="col-md-6 table-container">
+                    <table>
+                        <tbody>
+                            <tr><td>Pepper__bell___Bacterial_spot</td></tr>
+                            <tr><td>Pepper__bell___healthy</td></tr>
+                            <tr><td>Potato___Early_blight</td></tr>
+                            <tr><td>Potato___Late_blight</td></tr>
+                            <tr><td>Potato___healthy</td></tr>
+                            <tr><td>Tomato_Bacterial_spot</td></tr>
+                            <tr><td>Tomato_Early_blight</td></tr>
+                            <tr><td>Tomato_Late_blight</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 table-container">
+                    <table>
+                        <tbody>
+                            <tr><td>Tomato_Septoria_leaf_spot</td></tr>
+                            <tr><td>Tomato_Spider_mites_Two_spotted_spider_mite</td></tr>
+                            <tr><td>Tomato__Target_Spot</td></tr>
+                            <tr><td>Tomato__Tomato_YellowLeaf__Curl_Virus</td></tr>
+                            <tr><td>Tomato__Tomato_mosaic_virus</td></tr>
+                            <tr><td>Tomato_healthy</td></tr>
+                            <tr><td>Tomato_Leaf_Mold</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Plant Predict. All rights reserved.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,377 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e8f5e9;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'images/green.png' %}");
+            background-size: cover;
+            /* animation: fadeIn 1s ease-in-out; */
+        }
+        .container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* animation: fadeIn 1.5s ease-in-out; */
+        }
+        .image-preview {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            border: 2px dashed #4caf50; 
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #fff;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .upload-box {
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #4caf50; 
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            width: 50%;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+        .btn-primary {
+            background-color: #4caf50; 
+            border-color: #4caf50;
+            color: #fff;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #2e7d32;
+            transform: scale(1.05);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            display: none;
+        }
+        .loading-screen .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            animation: spin 1s linear infinite;
+        }
+        .alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1050;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        #uploadAnotherButton {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            color: #fff;
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+        #uploadAnotherButton:hover {
+            background-color: #388e3c;
+            border-color: #2e7d32;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        .prediction-result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.image-preview, .upload-box, .prediction-result, #uploadAnotherButton {
+    animation: fadeIn 0.5s ease-in; 
+}
+
+.loading-screen .spinner-border {
+    animation: spin 0.5s linear infinite; 
+}
+
+
+.alert {
+    transition: opacity 0.5s ease-in-out; 
+}
+
+button, .btn {
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Plant Predict</a>
+        <div class="collapse navbar-collapse" style="margin-left: 30vh;">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'upload_image' %}">Predict</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}?next={% url 'login' %}">Logout</a>
+
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="headingSection">
+            <h2 class="text-center">Upload Image for Plant Disease Prediction</h2>
+        </div>
+
+        <div class="upload-box" id="uploadBox">
+            <div class="image-preview" id="imagePreview">
+                <img id="preview" src="" alt="Image Preview">
+            </div>
+            <div class="button-container">
+                <div class="upload-form">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group" id="fileInputGroup">
+                            <label for="fileInput" class="btn btn-primary">Choose File</label>
+                            <input type="file" id="fileInput" name="image" onchange="showPredictButton(event)">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="predictButton" style="display: none;">Predict</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-screen" id="loadingScreen">
+            <div class="spinner-border text-success" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <div id="predictionResult" class="prediction-result" style="display: none;">
+            <h3>Prediction Result</h3>
+            <p id="predictedLabel"></p>
+            <p id="remedy"></p>
+            <button onclick="resetForm()" id="uploadAnotherButton">Upload Another Image</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Plant Predict. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function showPredictButton(event) {
+            document.getElementById('predictButton').style.display = 'block';
+            previewImage(event);
+            document.getElementById('fileInputGroup').style.display = 'none'; 
+        }
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                document.getElementById('imagePreview').style.display = 'flex';
+                document.getElementById('imagePreview').style.justifyContent = 'center';
+                document.getElementById('imagePreview').style.alignItems = 'center';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        document.getElementById('uploadForm').onsubmit = function(event) {
+            event.preventDefault(); 
+
+            
+            document.getElementById('loadingScreen').style.display = 'flex';
+
+           
+            var formData = new FormData(document.getElementById('uploadForm'));
+
+            fetch("{% url 'upload_image' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                document.getElementById('loadingScreen').style.display = 'none';
+
+               
+                document.getElementById('predictedLabel').textContent = data.predicted_label;
+                document.getElementById('remedy').textContent = data.remedy;
+                document.getElementById('predictionResult').style.display = 'block';
+
+                
+                document.getElementById('headingSection').style.display = 'none';
+                document.getElementById('uploadBox').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loadingScreen').style.display = 'none';
+            });
+        };
+
+        function resetForm() {
+            document.getElementById('uploadForm').reset();
+            document.getElementById('fileInputGroup').style.display = 'block';
+            document.getElementById('predictButton').style.display = 'none';
+            
+            
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'none'; 
+            imagePreview.style.border = '2px dashed #4caf50'; 
+            document.getElementById('preview').src = ''; 
+
+            document.getElementById('predictionResult').style.display = 'none';
+            document.getElementById('headingSection').style.display = 'block';
+            document.getElementById('uploadBox').style.display = 'flex'; 
+            
+            
+            if (document.getElementById('preview').src) {
+                imagePreview.style.display = 'flex';
+            }
+        }
+
+        $(document).ready(function() {
+            setTimeout(function() {
+                $(".alert").fadeOut("slow", function() {
+                    $(this).remove();
+                });
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
