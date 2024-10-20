@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorsal Hand Vein-Based Authentication System</title>
+    <style>
+       
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/4.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            color: white;
+            backdrop-filter: blur(1px);
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+            margin-left: 10vh;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .navbar .nav-links a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .auth-buttons a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            border-radius: 4px;
+        }
+
+        .navbar .auth-buttons a:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 15px auto;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        
+        .features, .instructions {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .features h2, .instructions h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .features ul, .instructions ol {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .features ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'upload_and_authenticate' %}">Authentication</a>
+            {% endif %}
+        </div>
+
+    
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Dorsal Hand Vein-Based Authentication System</h1>
+        <p>
+            Our system allows users to authenticate their identity using the unique patterns of veins on the dorsal side of their hand. This biometric authentication system utilizes near-infrared imaging technology and advanced image processing techniques to detect vein patterns, which are highly secure and reliable.
+        </p>
+
+        <div class="features">
+            <h2>Features:</h2>
+            <ul>
+                <li>Biometric Authentication: Unique vein pattern for identity verification.</li>
+                <li>Non-Invasive: No physical contact required, ensuring comfort.</li>
+                <li>High Security: Vein patterns are difficult to forge, enhancing security.</li>
+                <li>Easy to Use: Simply upload a hand image for verification.</li>
+                <li>Vein Pattern Extraction: Option to extract and visualize vein patterns for enhanced accuracy.</li>
+            </ul>
+        </div>
+
+        <div class="instructions">
+            <h2>Instructions:</h2>
+            <ol>
+                <li>Upload an image of your hand's dorsal side.</li>
+                <li>(Optional) Enable Vein Pattern Extraction for higher precision.</li>
+                <li>Click the Authenticate button to process the image.</li>
+                <li>Receive feedback on the authentication status.</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

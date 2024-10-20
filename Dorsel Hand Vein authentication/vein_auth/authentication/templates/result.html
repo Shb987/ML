@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+    
+        .result-success {
+            background-color: #e0f7e9;
+            color: #4CAF50;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+
+        .result-failed {
+            background-color: #fbe5e5;
+            color: #f44336;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authentication Result</h1>
+        
+        {% if result == 'Success' %}
+        <div class="result-success">
+            <p>Welcome, {{label}}</p>
+            <p><strong>Authentication Successful!</strong><br>Your image has been verified successfully.</p>
+            
+        </div>
+        {% else %}
+        
+        <div class="result-failed">
+            <p><strong>Authentication Failed!</strong><br>We couldn't verify the image. Please try again.</p>
+        </div>
+        {% endif %}
+
+        
+        <a href="{% url 'upload_and_authenticate' %}" class="back-button">Go Back</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Dorsal Hand Vein-Based Authentication</title>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url("{% static 'images/4.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden; 
+        }
+
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            color: white;
+            backdrop-filter: blur(1px);
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+            margin-left: 10vh;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .navbar .nav-links a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .auth-buttons a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            border-radius: 4px;
+        }
+
+        .navbar .auth-buttons a:hover {
+            background-color: #45a049;
+        }
+
+        
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            height: 70vh; 
+            overflow-y: auto; 
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+    
+        .overview, .benefits, .team {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .overview h2, .benefits h2, .team h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .benefits ul {
+            list-style: disc;
+            padding-left: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .applications {
+            padding-left: 40px;
+            margin-right: 15vh;
+            font-size: 16px;
+            color: #555;
+        }
+        
+   
+        .container::-webkit-scrollbar {
+            width: 8px; 
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 10px; 
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+
+        
+        .container {
+            scrollbar-width: thin; 
+            scrollbar-color: #a49f9f #f1f1f1; 
+        }
+
+        .container:hover {
+            overflow-y: auto; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'upload_and_authenticate' %}">Authentication</a>
+            {% endif %}
+        </div>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        <h1>About Dorsal Hand Vein-Based Authentication</h1>
+
+        <div class="overview">
+            <h2>Overview:</h2>
+            <p>
+                Biometric systems have become increasingly important in enhancing security and privacy for various applications. Among biometric modalities, dorsal hand vein-based authentication offers a robust and secure solution. This system leverages near-infrared imaging to detect the unique vein patterns beneath the skin, providing a high level of accuracy and protection from spoofing attacks.
+            </p>
+        </div>
+
+        <div class="benefits">
+            <h2>Key Benefits:</h2>
+            <ul>
+                <li><strong>Accuracy:</strong> The system captures unique vein patterns that are virtually impossible to duplicate, offering a high level of accuracy.</li>
+                <li><strong>Security:</strong> Vein-based authentication is resistant to common biometric spoofing methods like fingerprint or face recognition, making it an ideal solution for secure environments.</li>
+                <li><strong>Non-Invasiveness:</strong> No physical contact is needed, making it hygienic and comfortable for users.</li>
+            </ul>
+        </div>
+
+        <div class="applications">
+            <h2>Applications:</h2>
+            <ul>
+                <li>Access control in sensitive areas such as government facilities, banks, and secure workspaces.</li>
+                <li>Identity verification for digital applications like online banking or e-commerce.</li>
+                <li>Personal authentication for devices or systems requiring enhanced security.</li>
+            </ul>
+        </div>
+
+        <div class="team">
+            <h2>Development Team:</h2>
+            <p>
+                This system was developed by a team of dedicated engineers and researchers. Their focus is on leveraging the latest advancements in image processing, deep learning, and biometrics to deliver a secure and user-friendly authentication system.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
