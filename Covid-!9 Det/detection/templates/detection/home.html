@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 56px;
+            background: #f4f4f9;
+            color: #333;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .hero-section {
+            background: url("{% static 'images/d.jpg' %}") no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            border-bottom: 5px solid #007bff;
+        }
+        .hero-section h1 {
+            font-size: 3em;
+        }
+        .container {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #007bff;
+        }
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        .footer p {
+            margin: 0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'home' %}">Authentication</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'upload' %}">Prediction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'image_upload_list' %}">Results</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doctor_register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>Welcome to Dorsel Hand Vein Authentication</h1>
+            <p>Your go-to platform for Dorsel hand vein Based Authentications.</p>
+            <!-- <a href="#features" class="btn btn-primary btn-lg">Learn More</a> -->
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="features" class="section">
+                <h2>Features</h2>
+                <p>Our application provides secure access with user authentication, allowing you to log in and log out securely. Upload Dorsel Vein images and receive immediate predictions using our pre-trained TensorFlow model. Manage patient details efficiently with secure storage and easy retrieval based on specific criteria.</p>
+                <p>Use the patient lookup feature to find patient details and past scan results quickly. The application is built with Django for rapid development and TensorFlow for accurate detection, and uses SQLite3 for reliable data management.</p>
+            </div>
+            <div class="section">
+                <h2>Technology Stack</h2>
+                <p>We use Django for backend development, TensorFlow for deep learning, and SQLite3 for data storage. This combination ensures a robust, scalable, and efficient application.</p>
+            </div>
+            <div class="section">
+                <h2>How It Works</h2>
+                <p>Start by logging in, upload a Dorsel Hand Vein Image, and click "Predict" to get immediate results. Manage patient details, add new records, and view past scan results with ease.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('a[href*="#"]').on('click', function(e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $($(this).attr('href')).offset().top - 56
+                }, 500);
+            });
+            
+            var path = window.location.pathname;
+            $('.nav-item a').each(function() {
+                var href = $(this).attr('href');
+                if (path === href || path.indexOf(href) !== -1) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

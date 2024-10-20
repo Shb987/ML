@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 56px;
+            background: #f4f4f9;
+            color: #333;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .hero-section {
+            background: url("{% static 'images/a.jpg' %}") no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 5px solid #007bff;
+            margin-bottom: 40px;
+        }
+        .hero-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.2em;
+        }
+        .container {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #007bff;
+        }
+        .section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        .footer p {
+            margin: 0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'home' %}">Covid-19</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'upload' %}">Prediction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'image_upload_list' %}">Results</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doctor_register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>About This Application</h1>
+            <p>Discover how our Dorsel hand Vein Authentication Application leverages advanced technology to provide accurate and reliable results from Dorsel Veins.</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="section">
+                <h2>User Authentication</h2>
+                <ul>
+                    <li><strong>Secure Login:</strong> Users are authenticated using credentials stored securely in a configuration file. This ensures that only authorized personnel can access the application.</li>
+                    <li><strong>Logout Functionality:</strong> Users can securely log out of the application to prevent unauthorized access.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Database Connectivity</h2>
+                <ul>
+                    <li><strong>SQLite3 Database Integration:</strong> The application connects to an SQLite3 database to store and retrieve patient information. This allows for efficient management of patient data within a lightweight and self-contained database.</li>
+                    <li><strong>Cached Connection:</strong> To enhance performance, the database connection is cached, ensuring quick access to data without repeatedly establishing new connections.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Covid-19 Detection</h2>
+                <ul>
+                    <li><strong>Pre-trained Model:</strong> We utilize a pre-trained TensorFlow model to detect Dorsel Hand Vein Images. This model has been trained on a large dataset to ensure high accuracy.</li>
+                    <li><strong>Image Processing:</strong> The application preprocesses the uploaded images to fit the input requirements of the model, ensuring accurate predictions.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Patient Management</h2>
+                <ul>
+                    <li><strong>Data Entry:</strong> Users can input patient details such as name, age, and sex. The application ensures all fields are filled before processing to prevent incomplete data entries.</li>
+                    <li><strong>Data Storage:</strong> The details of each patient, along with their CT scan image and prediction result, are stored in the SQLite3 database.</li>
+                    <li><strong>Filtering:</strong> Users can filter and view patient data based on specified criteria, making it easier to manage and retrieve patient records.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Prediction and Results</h2>
+                <ul>
+                    <li><strong>Image Upload:</strong> Users can upload chest CT scan images, which are then displayed within the application.</li>
+                    <li><strong>Prediction:</strong> By clicking the "Predict" button, the application processes the uploaded image and displays whether the scan indicates Covid-19 or not.</li>
+                    <li><strong>Guidance:</strong> Based on the prediction, the application provides recommendations on next steps, such as isolating and consulting healthcare providers for positive cases.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Viewing Results</h2>
+                <ul>
+                    <li><strong>Patient Lookup:</strong> Users can enter the name and age of a patient to view their details and the results of previous scans.</li>
+                    <li><strong>Detailed Results:</strong> The application retrieves and displays comprehensive patient details from the SQLite3 database, including the latest scan results.</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h2>Technology Stack</h2>
+                <ul>
+                    <li><strong>Django:</strong> The application is built using Django, a high-level Python web framework that encourages rapid development and clean, pragmatic design.</li>
+                    <li><strong>TensorFlow:</strong> The deep learning model for Covid-19 detection is implemented using TensorFlow.</li>
+                    <li><strong>SQLite3:</strong> A lightweight, self-contained SQLite3 database is used for storing and managing patient data.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('a[href*="#"]').on('click', function(e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $($(this).attr('href')).offset().top
+                }, 1000);
+            });
+
+            var path = window.location.pathname;
+            $('.nav-item a').each(function() {
+                if (this.href.includes(path)) {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
